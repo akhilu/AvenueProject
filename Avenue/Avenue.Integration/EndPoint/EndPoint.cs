@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Avenue.ApplicationBus;
+using System.Threading;
 
 namespace Avenue.Integration.EndPoint
 {
     public class EndPoint<T> : IEndPoint where T : ApplicationBus.Command
     {
+        private static Semaphore _pool;
+
         public EndPoint()
         {
             InstanceId = Guid.NewGuid();
@@ -33,10 +36,26 @@ namespace Avenue.Integration.EndPoint
         {
             Console.WriteLine("Starting InstanceId {0}", InstanceId);
 
+            _pool = new Semaphore(5, 5);
+
             Func<Message, bool> MessageHandler = delegate(Message s)
             {
-                var message = DeSerializer.Deserialize<T>(s);
-                ApplicationBus.Bus.SendCommand(message);
+                try
+                {
+                    _pool.WaitOne();
+                    var message = DeSerializer.Deserialize<T>(s);
+                    ApplicationBus.Bus.SendCommand(message);
+                    
+                }
+                catch (Exception ex)
+                {
+
+
+                }
+                finally
+                {
+                    _pool.Release();
+                }
                 return true;
             };
 

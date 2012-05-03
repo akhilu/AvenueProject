@@ -10,9 +10,10 @@ namespace Avenue.Integration.Sample
         public void Handle(TimeMessage message)
         {
             System.Threading.Thread.Sleep(200);
-            System.Diagnostics.Debug.WriteLine(message.Time.ToLongTimeString());
-            System.Diagnostics.Debug.WriteLine(message.Test + "Running on thread " + System.Threading.Thread.CurrentThread.ManagedThreadId.ToString());
+            //System.Diagnostics.Debug.WriteLine(message.Time.ToLongTimeString());
+            //System.Diagnostics.Debug.WriteLine(message.Test + "Running on thread " + System.Threading.Thread.CurrentThread.ManagedThreadId.ToString());
             Console.WriteLine(message.Time.ToLongTimeString());
+            System.Threading.Thread.Sleep(200);
             Console.WriteLine(message.Test + "Running on thread " + System.Threading.Thread.CurrentThread.ManagedThreadId.ToString());
         }
     }
