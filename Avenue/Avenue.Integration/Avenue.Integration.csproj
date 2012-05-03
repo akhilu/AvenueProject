@@ -51,6 +51,9 @@
     <Compile Include="EndPoint\IQueueClient.cs" />
     <Compile Include="EndPoint\IQueueMessageDeSerializer.cs" />
     <Compile Include="EndPoint\XmlDeserializer .cs" />
+    <Compile Include="Persistance\IPersistEvents.cs" />
+    <Compile Include="Persistance\IPersistMessage.cs" />
+    <Compile Include="Persistance\IPersistMessagesFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceBusHost.cs" />
   </ItemGroup>
@@ -60,9 +63,7 @@
       <Name>Avenue.ApplicationBus</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Persistance\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
