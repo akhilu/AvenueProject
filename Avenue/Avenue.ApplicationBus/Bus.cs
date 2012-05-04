@@ -11,6 +11,7 @@ namespace Avenue.ApplicationBus
 
         private static Bus instance = new Bus();
         private static object locker = new object();
+        private static readonly InternalBus _bus = new InternalBus();
 
         public static Bus Instance
         {
@@ -37,7 +38,7 @@ namespace Avenue.ApplicationBus
 
         #endregion
 
-        private static readonly InternalBus _bus = new InternalBus();
+
 
         public void Publish<T>(T @event) where T : Event
         {
@@ -48,6 +49,19 @@ namespace Avenue.ApplicationBus
         {
             _bus.Send(command);
         }
+
+        public static void PublishEvent<T>(T @event) where T : Event
+        {
+            ApplicationBus.Bus.instance.Publish(@event);
+        }
+
+        public static void SendCommand<T>(T command) where T : Command
+        {
+            ApplicationBus.Bus.instance.Send(command);
+
+        }
+
+        #region Remove me
 
         public void RegisterCommandHandler<C, H>()
             where C : Command
@@ -62,23 +76,6 @@ namespace Avenue.ApplicationBus
         {
             _bus.RegisterEventHandler<E, H>();
         }
-
-        public void ResetRoutes()
-        {
-            _bus.ResetRoutes();
-        }
-
-        public static void PublishEvent<T>(T @event) where T : Event
-        {
-            ApplicationBus.Bus.instance.Publish(@event);
-        }
-
-        public static void SendCommand<T>(T command) where T : Command
-        {
-            ApplicationBus.Bus.instance.Send(command);
-
-        }
-
         public static void RegisterHandlerForCommand<C, H>()
             where C : Command
             where H : HandlesCommand<C>
@@ -94,6 +91,6 @@ namespace Avenue.ApplicationBus
         {
             ApplicationBus.Bus.instance.RegisterEventHandler<E, H>();
         }
-
+        #endregion
     }
 }

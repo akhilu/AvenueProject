@@ -10,7 +10,26 @@ namespace Avenue.ApplicationBus.Tests
     [TestFixture]
     public class InternalBusTests
     {
+        #region supporting
         private InternalBus bus;
+
+        private Command command;
+
+        void sendBusCommand()
+        {
+            bus.Send(command);
+        }
+        
+        void RegisterSecondEventHandler()
+        {
+            bus.RegisterEventHandler<UserCreatedEvent, CreateUserEventHandler>();
+        }
+        
+        void RegisterSecondCommandHandler()
+        {
+            bus.RegisterCommandHandler<CreateUserCommand, CreateUserCommandHandler>();
+        }
+        #endregion
 
         #region Register Handlers
         [Test]
@@ -21,11 +40,6 @@ namespace Avenue.ApplicationBus.Tests
             bus.RegisterCommandHandler<CreateUserCommand, CreateUserCommandHandler>();
             //  Bus.Instance.RegisterHandler<CreateUserCommand>(new CreateUserCommandHandler().Handle);
             Assert.Throws(typeof(InvalidOperationException), new TestDelegate(RegisterSecondCommandHandler));
-        }
-
-        void RegisterSecondCommandHandler()
-        {
-            bus.RegisterCommandHandler<CreateUserCommand, CreateUserCommandHandler>();
         }
 
         [Test]
@@ -46,20 +60,45 @@ namespace Avenue.ApplicationBus.Tests
             Assert.Throws(typeof(InvalidOperationException), new TestDelegate(RegisterSecondEventHandler));
         }
 
-        void RegisterSecondEventHandler()
-        {
-            bus.RegisterEventHandler<UserCreatedEvent, CreateUserEventHandler>();
-        }
         #endregion
 
         #region Publish Event
+
+        [Test]
+        public void SendEvent_ShouldCallRegisteredEvent()
+        {
+            bus = new InternalBus();
+            bus.ResetRoutes();
+            bus.RegisterEventHandler<UserCreatedEvent, CreateUserEventHandler>();
+
+            var newEvent = new UserCreatedEvent() { UserName = "Bob" };
+            CreateUserEventHandler.Called = false;
+            bus.Publish(newEvent);
+            Assert.IsTrue(CreateUserEventHandler.Called);
+
+        }
+
+        [Test]
+        public void SendEvent_ShouldCallMultipleRegisteredRegisteredEvents()
+        {
+            bus = new InternalBus();
+            bus.ResetRoutes();
+            bus.RegisterEventHandler<UserCreatedEvent, CreateUserEventHandler>();
+            bus.RegisterEventHandler<UserCreatedEvent, CreateUserEventHandlerTwo>();
+            var newEvent = new UserCreatedEvent() { UserName = "Bob" };
+            CreateUserEventHandler.Called = false;
+            CreateUserEventHandlerTwo.Called = false;
+            bus.Publish(newEvent);
+            Assert.IsTrue(CreateUserEventHandler.Called && CreateUserEventHandlerTwo.Called);
+
+        }
 
         #endregion
 
         #region Send Command
 
         [Test]
-        public void bla()
+        public void SendCommand_ShouldCallRegisteredCommands()
         {
             bus = new InternalBus();
             bus.ResetRoutes();
@@ -71,55 +110,23 @@ namespace Avenue.ApplicationBus.Tests
             Assert.IsTrue(CreateUserCommandHandler.Called);
 
         }
-       
+
+        [Test]
+        public void SendCommand_ShouldReturnException_WhenCallingUnRegisteredCommands()
+        {
+            bus = new InternalBus();
+            bus.ResetRoutes();
+
+            command = new CreateUserCommand() { UserName = "Bob" };
+            CreateUserCommandHandler.Called = false;
+            Assert.Throws(typeof(InvalidOperationException), new TestDelegate(sendBusCommand));
+
+        }
+
         #endregion
 
     }
 
 
-    #region helper classes
 
-    public class CreateUserCommand : Command
-    {
-        public string UserName { get; set; }
-    }
-
-    public class UserCreatedEvent : Event
-    {
-        public string UserName { get; set; }
-    }
-
-    public class CreateUserCommandHandler : HandlesCommand<CreateUserCommand>
-    {
-        public void Handle(CreateUserCommand message)
-        {
-            Called = true;
-            Bus.Instance.Publish(new UserCreatedEvent() { UserName = message.UserName });
-        }
-
-        public static bool Called { get; set; }
-    }
-
-    public class CreateUserEventHandler : HandlesEvent<UserCreatedEvent>
-    {
-        public void Handle(UserCreatedEvent message)
-        {
-            Called = true;
-        }
-
-        public static bool Called { get; set; }
-    }
-
-
-    public class CreateUserEventHandlerTwo : HandlesEvent<UserCreatedEvent>
-    {
-        public void Handle(UserCreatedEvent message)
-        {
-            Called = true;
-        }
-
-        public static bool Called { get; set; }
-    }
-
-    #endregion
 }

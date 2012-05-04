@@ -9,5 +9,6 @@ namespace Avenue.ApplicationBus
     {
         void Send<T>(T command) where T : Command;
 
+        
     }
 }
