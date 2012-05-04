@@ -12,7 +12,6 @@ namespace Avenue.ApplicationBus
 {
         public class InternalBus : ICommandSender, IEventPublisher
         {
-
             public void ResetRoutes()
             {
                 foreach (var cur in _routes)
@@ -20,8 +19,6 @@ namespace Avenue.ApplicationBus
                     _routes.Remove(cur.Key);
                 }
             }
-
-            //private readonly Dictionary<Type, List<Action<Message>>> _routesold = new Dictionary<Type, List<Action<Message>>>();
 
             private readonly Dictionary<Type, List<Type>> _routes = new Dictionary<Type, List<Type>>();
 
@@ -72,7 +69,6 @@ namespace Avenue.ApplicationBus
 
             }
 
-
             public void Send<T>(T command) where T : Command
             {
                 List<Type> handlers;
@@ -114,52 +110,50 @@ namespace Avenue.ApplicationBus
                 return (T)Activator.CreateInstance(type);
             }
 
+            ////http://rogeralsing.com/2008/02/28/linq-expressions-creating-objects/
+            //delegate T ObjectActivator<T>(params object[] args);
 
-            //http://rogeralsing.com/2008/02/28/linq-expressions-creating-objects/
-            delegate T ObjectActivator<T>(params object[] args);
+            //static ObjectActivator<T> GetActivator<T>(ConstructorInfo ctor)
+            //{
+            //    Type type = ctor.DeclaringType;
+            //    ParameterInfo[] paramsInfo = ctor.GetParameters();
 
-            static ObjectActivator<T> GetActivator<T>(ConstructorInfo ctor)
-            {
-                Type type = ctor.DeclaringType;
-                ParameterInfo[] paramsInfo = ctor.GetParameters();
+            //    //create a single param of type object[]
+            //    ParameterExpression param =
+            //        Expression.Parameter(typeof(object[]), "args");
 
-                //create a single param of type object[]
-                ParameterExpression param =
-                    Expression.Parameter(typeof(object[]), "args");
+            //    Expression[] argsExp =
+            //        new Expression[paramsInfo.Length];
 
-                Expression[] argsExp =
-                    new Expression[paramsInfo.Length];
+            //    //pick each arg from the params array 
+            //    //and create a typed expression of them
+            //    for (int i = 0; i < paramsInfo.Length; i++)
+            //    {
+            //        Expression index = Expression.Constant(i);
+            //        Type paramType = paramsInfo[i].ParameterType;
 
-                //pick each arg from the params array 
-                //and create a typed expression of them
-                for (int i = 0; i < paramsInfo.Length; i++)
-                {
-                    Expression index = Expression.Constant(i);
-                    Type paramType = paramsInfo[i].ParameterType;
+            //        Expression paramAccessorExp =
+            //            Expression.ArrayIndex(param, index);
 
-                    Expression paramAccessorExp =
-                        Expression.ArrayIndex(param, index);
+            //        Expression paramCastExp =
+            //            Expression.Convert(paramAccessorExp, paramType);
 
-                    Expression paramCastExp =
-                        Expression.Convert(paramAccessorExp, paramType);
+            //        argsExp[i] = paramCastExp;
+            //    }
 
-                    argsExp[i] = paramCastExp;
-                }
+            //    //make a NewExpression that calls the
+            //    //ctor with the args we just created
+            //    NewExpression newExp = Expression.New(ctor, argsExp);
 
-                //make a NewExpression that calls the
-                //ctor with the args we just created
-                NewExpression newExp = Expression.New(ctor, argsExp);
+            //    //create a lambda with the New
+            //    //Expression as body and our param object[] as arg
+            //    LambdaExpression lambda =
+            //        Expression.Lambda(typeof(ObjectActivator<T>), newExp, param);
 
-                //create a lambda with the New
-                //Expression as body and our param object[] as arg
-                LambdaExpression lambda =
-                    Expression.Lambda(typeof(ObjectActivator<T>), newExp, param);
-
-                //compile it
-                ObjectActivator<T> compiled = (ObjectActivator<T>)lambda.Compile();
-                return compiled;
-            }
-
+            //    //compile it
+            //    ObjectActivator<T> compiled = (ObjectActivator<T>)lambda.Compile();
+            //    return compiled;
+            //}
         }
 
 }

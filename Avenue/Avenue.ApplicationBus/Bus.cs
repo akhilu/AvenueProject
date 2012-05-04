@@ -9,16 +9,30 @@ namespace Avenue.ApplicationBus
     {
         #region singleton ctor
 
-        private static readonly Bus instance = new Bus();
-
-        private Bus()
-        {
-
-        }
+        private static Bus instance = new Bus();
+        private static object locker = new object();
 
         public static Bus Instance
         {
-            get { return instance; }
+            get
+            {
+                if (instance == null)
+                {
+                    lock (locker)
+                    {
+                        if (instance == null)
+                        {
+                            instance = new Bus();
+                            //load all handlers by default.
+                        }
+                    }
+                }
+                return instance;
+            }
+            set
+            {
+                instance = value;
+            }
         }
 
         #endregion
@@ -57,7 +71,6 @@ namespace Avenue.ApplicationBus
         public static void PublishEvent<T>(T @event) where T : Event
         {
             ApplicationBus.Bus.instance.Publish(@event);
-
         }
 
         public static void SendCommand<T>(T command) where T : Command

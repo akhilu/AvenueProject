@@ -19,6 +19,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{C134A8
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avenue.ApplicationBus.Tests", "Avenue.ApplicationBus.Tests\Avenue.ApplicationBus.Tests.csproj", "{618FDDB0-3F3A-470B-8AB4-08B79AC75764}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avenue.Integration.Tests", "Avenue.Integration.Tests\Avenue.Integration.Tests.csproj", "{4823E911-1084-4B33-BDCD-95719E1D855E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -79,8 +83,32 @@ Global
 		{795B7632-AB18-40E7-93BE-58C8508800F3}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{795B7632-AB18-40E7-93BE-58C8508800F3}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{795B7632-AB18-40E7-93BE-58C8508800F3}.Release|x86.ActiveCfg = Release|Any CPU
+		{618FDDB0-3F3A-470B-8AB4-08B79AC75764}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{618FDDB0-3F3A-470B-8AB4-08B79AC75764}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{618FDDB0-3F3A-470B-8AB4-08B79AC75764}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{618FDDB0-3F3A-470B-8AB4-08B79AC75764}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{618FDDB0-3F3A-470B-8AB4-08B79AC75764}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{618FDDB0-3F3A-470B-8AB4-08B79AC75764}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{618FDDB0-3F3A-470B-8AB4-08B79AC75764}.Release|Any CPU.Build.0 = Release|Any CPU
+		{618FDDB0-3F3A-470B-8AB4-08B79AC75764}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{618FDDB0-3F3A-470B-8AB4-08B79AC75764}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{618FDDB0-3F3A-470B-8AB4-08B79AC75764}.Release|x86.ActiveCfg = Release|Any CPU
+		{4823E911-1084-4B33-BDCD-95719E1D855E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4823E911-1084-4B33-BDCD-95719E1D855E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4823E911-1084-4B33-BDCD-95719E1D855E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{4823E911-1084-4B33-BDCD-95719E1D855E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{4823E911-1084-4B33-BDCD-95719E1D855E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4823E911-1084-4B33-BDCD-95719E1D855E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4823E911-1084-4B33-BDCD-95719E1D855E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4823E911-1084-4B33-BDCD-95719E1D855E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{4823E911-1084-4B33-BDCD-95719E1D855E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{4823E911-1084-4B33-BDCD-95719E1D855E}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{618FDDB0-3F3A-470B-8AB4-08B79AC75764} = {C3D37BBC-5944-465F-A901-63A59BFB7A66}
+		{4823E911-1084-4B33-BDCD-95719E1D855E} = {C3D37BBC-5944-465F-A901-63A59BFB7A66}
 	EndGlobalSection
 EndGlobal

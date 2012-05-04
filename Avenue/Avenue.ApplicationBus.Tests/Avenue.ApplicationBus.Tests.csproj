@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{879A0690-9C07-4239-B714-B676C6EC0161}</ProjectGuid>
+    <ProjectGuid>{618FDDB0-3F3A-470B-8AB4-08B79AC75764}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Avenue.Integration</RootNamespace>
-    <AssemblyName>Avenue.Integration</AssemblyName>
+    <RootNamespace>Avenue.ApplicationBus.Tests</RootNamespace>
+    <AssemblyName>Avenue.ApplicationBus.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -33,6 +33,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core">
+      <HintPath>..\packages\Castle.Core.2.5.2\lib\NET35\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="FakeItEasy">
+      <HintPath>..\packages\FakeItEasy.1.7.4257.42\lib\NET40\FakeItEasy.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.2.6.0.12054\lib\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -42,22 +51,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\EndPointConfiguration.cs" />
-    <Compile Include="Configuration\EndPointConfigurator.cs" />
-    <Compile Include="Configuration\HostConfiguration.cs" />
-    <Compile Include="Configuration\HostConfigurator.cs" />
-    <Compile Include="Configuration\ServiceBusFactory.cs" />
-    <Compile Include="EndPoint\EndPoint.cs" />
-    <Compile Include="EndPoint\EndPointMessage.cs" />
-    <Compile Include="EndPoint\IEndPoint.cs" />
-    <Compile Include="EndPoint\IQueueClient.cs" />
-    <Compile Include="EndPoint\IQueueMessageDeSerializer.cs" />
-    <Compile Include="EndPoint\XmlDeserializer .cs" />
-    <Compile Include="Persistance\IPersistEvents.cs" />
-    <Compile Include="Persistance\IPersistMessage.cs" />
-    <Compile Include="Persistance\IPersistMessagesFactory.cs" />
+    <Compile Include="InternalBusTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServiceBusHost.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Avenue.ApplicationBus\Avenue.ApplicationBus.csproj">
@@ -65,7 +60,9 @@
       <Name>Avenue.ApplicationBus</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
