@@ -65,7 +65,7 @@ namespace Avenue.ApplicationBus.Tests
         #region Publish Event
 
         [Test]
-        public void SendEvent_ShouldCallRegisteredEvent()
+        public void Publish_ShouldCallRegisteredEvent()
         {
             bus = new InternalBus();
             bus.ResetRoutes();
@@ -79,7 +79,7 @@ namespace Avenue.ApplicationBus.Tests
         }
 
         [Test]
-        public void SendEvent_ShouldCallMultipleRegisteredRegisteredEvents()
+        public void Publish_ShouldCallMultipleRegisteredRegisteredEvents()
         {
             bus = new InternalBus();
             bus.ResetRoutes();
@@ -98,7 +98,7 @@ namespace Avenue.ApplicationBus.Tests
         #region Send Command
 
         [Test]
-        public void SendCommand_ShouldCallRegisteredCommands()
+        public void Send_ShouldCallRegisteredCommands()
         {
             bus = new InternalBus();
             bus.ResetRoutes();
@@ -112,7 +112,7 @@ namespace Avenue.ApplicationBus.Tests
         }
 
         [Test]
-        public void SendCommand_ShouldReturnException_WhenCallingUnRegisteredCommands()
+        public void Send_ShouldReturnException_WhenCallingUnRegisteredCommands()
         {
             bus = new InternalBus();
             bus.ResetRoutes();
