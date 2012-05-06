@@ -36,6 +36,12 @@ namespace Avenue.ApplicationBus
                 RegisterHandler<E, H>();
             }
 
+            public void RegisterEventHandler(Type messageType, Type handlerType)
+            {
+                if()
+
+            }
+
             private void RegisterHandler<M, H>()
             {
                 List<Type> handlers;
