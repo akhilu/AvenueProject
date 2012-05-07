@@ -51,8 +51,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Configuration\ServiceBusFactoryTests.cs" />
+    <Compile Include="EndPoint\EndPointTests.cs" />
+    <Compile Include="EndPoint\XmlSerializerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceBusHostTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

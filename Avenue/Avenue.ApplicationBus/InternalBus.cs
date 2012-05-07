@@ -36,9 +36,42 @@ namespace Avenue.ApplicationBus
                 RegisterHandler<E, H>();
             }
 
-            public void RegisterEventHandler(Type messageType, Type handlerType)
+            public void RegisterHandler(Type messageType, Type handlerType)
             {
-                if()
+
+                if (!(messageType.IsSubclassOf(typeof(Command)) || messageType.IsSubclassOf(typeof(Event))))
+                {
+                    throw new InvalidOperationException("cannot add more than one command handler for a command");
+
+                }
+                List<Type> handlers;
+                if (!_routes.TryGetValue(messageType, out handlers))
+                {
+                    handlers = new List<Type>();
+                    _routes.Add(messageType, handlers);
+                }
+
+                if (messageType.IsSubclassOf(typeof(Command)))
+                {
+                    //if (!handlers.Contains())
+
+                    if (handlers.Count > 0)
+                    {
+                        throw new InvalidOperationException("cannot add more than one command handler for a command");
+                    }
+                    else
+                    {
+                        handlers.Add(handlerType);
+                    }
+                }
+                else
+                {
+                    if (handlers.Contains(handlerType))
+                    {
+                        throw new InvalidOperationException("cannot add the same handler for an event multiple times");
+                    }
+                    handlers.Add(handlerType);
+                }
 
             }
 

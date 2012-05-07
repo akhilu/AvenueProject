@@ -36,7 +36,7 @@ namespace Avenue.Integration.EndPoint
         {
             Console.WriteLine("Starting InstanceId {0}", InstanceId);
 
-            _pool = new Semaphore(5, 5);
+            _pool = new Semaphore(1, 1);
 
             Func<Message, bool> MessageHandler = delegate(Message s)
             {
@@ -64,10 +64,6 @@ namespace Avenue.Integration.EndPoint
             CurrentStatus = Status.Running;
         }
 
-
-
-
-
         public void Stop()
         {
             Console.WriteLine("Stoppint InstanceId {0}", InstanceId);
@@ -77,10 +73,5 @@ namespace Avenue.Integration.EndPoint
             Console.WriteLine("Stopped InstanceId {0}", InstanceId);
         }
 
-
-        public object SomeMethod(object value)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

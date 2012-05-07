@@ -7,8 +7,6 @@ namespace Avenue.Integration.EndPoint
 {
     interface IEndPoint
     {
-        object SomeMethod(object value);
-
         IQueueClient QueueClient { get; set; }
 
         string ConnectionString { get; set; }
@@ -21,6 +19,6 @@ namespace Avenue.Integration.EndPoint
 
     interface IEndPoint<T> : IEndPoint where T : ApplicationBus.Command
     {
-        T SomeMethod(T value);
+       
     }
 }

@@ -16,7 +16,6 @@ namespace Avenue.ApplicationBus
         public DateTime TimeRecieved { get; set; }
         public Guid LocalId { get; set; }
         public string Body { get; set; }
-
     }
     
 }

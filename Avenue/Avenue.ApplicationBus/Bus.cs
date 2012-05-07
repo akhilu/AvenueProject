@@ -12,7 +12,7 @@ namespace Avenue.ApplicationBus
 
         private static Bus instance;
         private static object locker = new object();
-        private static readonly InternalBus _bus;
+        private static readonly InternalBus _bus = new InternalBus();
 
         public static Bus Instance
         {
@@ -49,6 +49,12 @@ namespace Avenue.ApplicationBus
             _bus.Send(command);
         }
 
+        public void RegisterHandler(Type messageType, Type handlerType)
+        {
+            _bus.RegisterHandler(messageType, handlerType);
+
+        }
+
         public static void PublishEvent<T>(T @event) where T : Event
         {
             ApplicationBus.Bus.Instance.Publish(@event);
@@ -59,6 +65,8 @@ namespace Avenue.ApplicationBus
             ApplicationBus.Bus.Instance.Send(command);
 
         }
+
+        
 
         private static void WireUpAppDomainHandlers()
         {
@@ -92,14 +100,15 @@ namespace Avenue.ApplicationBus
                 {
                     var handlesTypeOf = type.GetInterfaces()[0].GetGenericArguments()[0];
 
-                    ApplicationBus.Bus.Instance.RegisterCommandHandler<type, handlesTypeOf>();
-                    ApplicationBus.Bus.Instance.re
+                    ApplicationBus.Bus.Instance.RegisterHandler(handlesTypeOf, type);
 
                 }
 
                 if (type.GetInterface(typeof(HandlesEvent<>).Name) != null)
                 {
+                    var handlesTypeOf = type.GetInterfaces()[0].GetGenericArguments()[0];
 
+                    ApplicationBus.Bus.Instance.RegisterHandler(handlesTypeOf, type);
 
                 }
 
@@ -107,36 +116,36 @@ namespace Avenue.ApplicationBus
 
         }
 
-        #region Remove me
+        //#region Remove me
 
-        public void RegisterCommandHandler<C, H>()
-            where C : Command
-            where H : HandlesCommand<C>
-        {
-            _bus.RegisterCommandHandler<C, H>();
-        }
+        //public void RegisterCommandHandler<C, H>()
+        //    where C : Command
+        //    where H : HandlesCommand<C>
+        //{
+        //    _bus.RegisterCommandHandler<C, H>();
+        //}
 
-        public void RegisterEventHandler<E, H>()
-            where E : Event
-            where H : HandlesEvent<E>
-        {
-            _bus.RegisterEventHandler<E, H>();
-        }
-        public static void RegisterHandlerForCommand<C, H>()
-            where C : Command
-            where H : HandlesCommand<C>
-        {
-            ApplicationBus.Bus.instance.RegisterCommandHandler<C, H>();
+        //public void RegisterEventHandler<E, H>()
+        //    where E : Event
+        //    where H : HandlesEvent<E>
+        //{
+        //    _bus.RegisterEventHandler<E, H>();
+        //}
+        //public static void RegisterHandlerForCommand<C, H>()
+        //    where C : Command
+        //    where H : HandlesCommand<C>
+        //{
+        //    ApplicationBus.Bus.instance.RegisterCommandHandler<C, H>();
 
 
-        }
+        //}
 
-        public static void RegisterHandlerForEvent<E, H>()
-            where E : Event
-            where H : HandlesEvent<E>
-        {
-            ApplicationBus.Bus.instance.RegisterEventHandler<E, H>();
-        }
-        #endregion
+        //public static void RegisterHandlerForEvent<E, H>()
+        //    where E : Event
+        //    where H : HandlesEvent<E>
+        //{
+        //    ApplicationBus.Bus.instance.RegisterEventHandler<E, H>();
+        //}
+        //#endregion
     }
 }

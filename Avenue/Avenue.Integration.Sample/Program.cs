@@ -71,7 +71,7 @@ namespace Avenue.Integration.Sample
                 });
             });
 
-            ApplicationBus.Bus.RegisterHandlerForCommand<TimeMessage, TimeHandler>();
+         //   ApplicationBus.Bus.RegisterHandlerForCommand<TimeMessage, TimeHandler>();
 
             var host = HostFactory.New(x =>
             {

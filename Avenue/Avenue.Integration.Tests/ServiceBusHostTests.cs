@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Avenue.Integration.Tests
 {
-    public class Class1
+    class ServiceBusHostTests
     {
     }
 }
