@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Avenue.ApplicationBus;
 using System.Threading;
 
 namespace Avenue.Integration.EndPoint
 {
-    public class EndPoint<T> : IEndPoint where T : ApplicationBus.Command
+    public class EndPoint<T> : IEndPoint where T : Command
     {
         private static Semaphore _pool;
 
@@ -29,7 +26,6 @@ namespace Avenue.Integration.EndPoint
         public string ConnectionString { get; set; }
         public IQueueMessageDeSerializer DeSerializer { get; set; }
 
-
         public Status CurrentStatus { get; private set; }
 
         public void Start()
@@ -38,19 +34,14 @@ namespace Avenue.Integration.EndPoint
 
             _pool = new Semaphore(1, 1);
 
-            Func<Message, bool> MessageHandler = delegate(Message s)
+            Func<Message, bool> messageHandler = delegate(Message s)
             {
                 try
                 {
                     _pool.WaitOne();
                     var message = DeSerializer.Deserialize<T>(s);
-                    ApplicationBus.Bus.SendCommand(message);
+                    Bus.SendCommand(message);
                     
-                }
-                catch (Exception ex)
-                {
-
-
                 }
                 finally
                 {
@@ -59,7 +50,7 @@ namespace Avenue.Integration.EndPoint
                 return true;
             };
 
-            QueueClient.Configure(MessageHandler, ConnectionString);
+            QueueClient.Configure(messageHandler, ConnectionString);
             QueueClient.Start();
             CurrentStatus = Status.Running;
         }

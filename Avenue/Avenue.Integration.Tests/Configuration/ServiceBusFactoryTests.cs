@@ -12,7 +12,7 @@ namespace Avenue.Integration.Tests.Configuration
         [Test]
         public void CreateHost_ShouldCreateHost()
         {
-            
+            Assert.IsTrue(false);
 
         }
     }

@@ -125,6 +125,15 @@ namespace Avenue.ApplicationBus.Tests
 
         #endregion
 
+        #region ServiceLocator Test
+        [Test]
+        public void Publish_ShouldUseServiceLocatorWhenRegistered()
+        {
+
+            Assert.IsTrue(false);
+        }
+        #endregion
+
     }
 
 
