@@ -79,6 +79,7 @@ namespace Avenue.Integration.Queue.TimeEcho
 
         public void Stop()
         {
+            Console.WriteLine("Stopping Time");
             _timer.Stop();
            // throw new NotImplementedException();
         }

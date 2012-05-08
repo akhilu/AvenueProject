@@ -59,7 +59,7 @@ namespace Avenue.Integration.EndPoint
         {
             Console.WriteLine("Stoppint InstanceId {0}", InstanceId);
             CurrentStatus = Status.Stopping;
-
+            QueueClient.Stop();
             CurrentStatus = Status.Stopped;
             Console.WriteLine("Stopped InstanceId {0}", InstanceId);
         }
