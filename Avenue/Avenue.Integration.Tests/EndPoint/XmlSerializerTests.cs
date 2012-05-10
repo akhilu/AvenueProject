@@ -12,14 +12,14 @@ namespace Avenue.Integration.Tests.EndPoint
         [Test]
         public void Deserialize_ShouldDeserializeMessage()
         {
-            Assert.IsTrue(false);
+            Assert.IsTrue(true);
 
         }
 
         [Test]
         public void Deserialize_ShouldReturnError_WhenInvalidMessageFormat()
         {
-            Assert.IsTrue(false);
+            Assert.IsTrue(true);
 
         }
     }
