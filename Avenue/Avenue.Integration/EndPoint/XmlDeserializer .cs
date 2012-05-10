@@ -10,7 +10,7 @@ namespace Avenue.Integration.EndPoint
 {
     public class XmlDeserializer : IQueueMessageDeSerializer
     {
-        public T Deserialize<T>(ApplicationBus.Message message)
+        public T Deserialize<T>(Avenue.Integration.EndPoint.EndPointMessage message)
         {
             var serializer = new XmlSerializer(typeof(T));
             var stringReader = new StringReader(message.Body);

@@ -20,6 +20,14 @@ namespace Avenue.ApplicationBus
                 }
             }
 
+            private Func<Type, object> _servicLocator; 
+
+            public void UseServiceLocator(Func<Type, object> serviceLocator )
+            {
+                _servicLocator = serviceLocator;
+
+            }
+
             private readonly Dictionary<Type, List<Type>> _routes = new Dictionary<Type, List<Type>>();
 
             public void RegisterCommandHandler<C, H>()
@@ -146,7 +154,10 @@ namespace Avenue.ApplicationBus
             private T CreateInstance<T>(Type type)
             {
                 //ToDo - Injection
-                return (T)Activator.CreateInstance(type);
+                if (_servicLocator == null)
+                    return (T)Activator.CreateInstance(type);
+                else
+                    return (T)_servicLocator(type);
             }
 
             ////http://rogeralsing.com/2008/02/28/linq-expressions-creating-objects/

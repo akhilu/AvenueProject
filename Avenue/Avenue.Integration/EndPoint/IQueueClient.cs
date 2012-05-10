@@ -7,7 +7,7 @@ namespace Avenue.Integration.EndPoint
 {
     public interface IQueueClient
     {
-        void Configure(Func<ApplicationBus.Message, bool> recieveMessage, string connectionString);
+        void Configure(Func<Avenue.Integration.EndPoint.EndPointMessage, bool> recieveMessage, string connectionString);
         void Start();
         void Stop();
     }

@@ -39,6 +39,12 @@ namespace Avenue.ApplicationBus
 
         #endregion
 
+        public void UseServiceLocator(Func<Type, object> serviceLocator )
+        {
+            _bus.UseServiceLocator(serviceLocator);
+
+        }
+
         public void Publish<T>(T @event) where T : Event
         {
             _bus.Publish(@event);
@@ -116,36 +122,6 @@ namespace Avenue.ApplicationBus
 
         }
 
-        //#region Remove me
-
-        //public void RegisterCommandHandler<C, H>()
-        //    where C : Command
-        //    where H : HandlesCommand<C>
-        //{
-        //    _bus.RegisterCommandHandler<C, H>();
-        //}
-
-        //public void RegisterEventHandler<E, H>()
-        //    where E : Event
-        //    where H : HandlesEvent<E>
-        //{
-        //    _bus.RegisterEventHandler<E, H>();
-        //}
-        //public static void RegisterHandlerForCommand<C, H>()
-        //    where C : Command
-        //    where H : HandlesCommand<C>
-        //{
-        //    ApplicationBus.Bus.instance.RegisterCommandHandler<C, H>();
-
-
-        //}
-
-        //public static void RegisterHandlerForEvent<E, H>()
-        //    where E : Event
-        //    where H : HandlesEvent<E>
-        //{
-        //    ApplicationBus.Bus.instance.RegisterEventHandler<E, H>();
-        //}
-        //#endregion
+    
     }
 }

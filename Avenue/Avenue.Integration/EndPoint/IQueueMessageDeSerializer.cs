@@ -7,6 +7,6 @@ namespace Avenue.Integration.EndPoint
 {
     public interface IQueueMessageDeSerializer
     {
-        T Deserialize<T>(ApplicationBus.Message message);
+        T Deserialize<T>(Avenue.Integration.EndPoint.EndPointMessage message);
     }
 }

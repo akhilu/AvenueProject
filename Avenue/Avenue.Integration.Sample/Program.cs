@@ -14,10 +14,20 @@ namespace Avenue.Integration.Sample
     {
         static void Main(string[] args)
         {
+            var container = new StructureMap.Container();
+            
+            Func<Type, object> serviceLocator = new Func<Type, object>(
+                (type) =>
+                    {
+                        return container.GetInstance(type);
+                    }
+                );
+
+
+            ApplicationBus.Bus.Instance.UseServiceLocator(serviceLocator);
 
             var configuration = ServiceBusFactory.New(x =>
             {
-                //x.UserServiceLocator(locator);
                 //x.LogTo<String>();
                 //x.UseDataprovider<Type>();
                 //x.what else

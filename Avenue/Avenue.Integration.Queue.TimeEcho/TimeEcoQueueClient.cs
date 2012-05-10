@@ -13,7 +13,7 @@ namespace Avenue.Integration.Queue.TimeEcho
 {
     public class TimeEcoQueueClient : IQueueClient
     {
-        private Func<ApplicationBus.Message, bool> _messageSender;
+        private Func<Avenue.Integration.EndPoint.EndPointMessage, bool> _messageSender;
         public String EchoMessage { get; set; }
 
         readonly Timer _timer;
@@ -84,7 +84,7 @@ namespace Avenue.Integration.Queue.TimeEcho
            // throw new NotImplementedException();
         }
 
-        public void Configure(Func<Avenue.ApplicationBus.Message, bool> recieveMessage, string connectionString)
+        public void Configure(Func<Avenue.Integration.EndPoint.EndPointMessage, bool> recieveMessage, string connectionString)
         {
             EchoMessage = connectionString;
             _messageSender = recieveMessage;

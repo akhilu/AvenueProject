@@ -34,12 +34,13 @@ namespace Avenue.Integration.EndPoint
 
             _pool = new Semaphore(1, 1);
 
-            Func<Message, bool> messageHandler = delegate(Message s)
+            Func<Avenue.Integration.EndPoint.EndPointMessage, bool> messageHandler = delegate(Avenue.Integration.EndPoint.EndPointMessage s)
             {
                 try
                 {
                     _pool.WaitOne();
                     var message = DeSerializer.Deserialize<T>(s);
+                    message.LocalId = s.LocalId;
                     Bus.SendCommand(message);
                     
                 }
